@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/Scripts/ShapeGenerator.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 1024.56, 1025.12 )
+
+[node name="ShapeGenerator" type="Node2D"]
+position = Vector2( -0.561218, 1.12247 )
+script = ExtResource( 1 )
+max_shapes = 150
+zero_timer = 0.02
+max_timer = 0.5
+
+[node name="SpawnArea" type="Area2D" parent="."]
+monitoring = false
+monitorable = false
+collision_layer = 0
+collision_mask = 0
+
+[node name="Area" type="CollisionShape2D" parent="SpawnArea"]
+visible = false
+shape = SubResource( 1 )
+disabled = true
+
+[node name="SpawnTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Shapes" type="Node2D" parent="."]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]

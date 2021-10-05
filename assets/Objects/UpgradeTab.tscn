@@ -1,0 +1,112 @@
+[gd_scene format=2]
+
+[node name="UpgradeTab" type="Control"]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StatsText" type="Label" parent="."]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 192.0
+margin_bottom = 22.0
+text = "Stats:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 8.0
+margin_top = 32.0
+margin_right = 200.0
+margin_bottom = 152.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Labels" type="VBoxContainer" parent="HBoxContainer"]
+margin_right = 94.0
+margin_bottom = 120.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HP" type="Label" parent="HBoxContainer/Labels"]
+margin_right = 94.0
+margin_bottom = 20.0
+size_flags_vertical = 3
+text = "HP: %s"
+valign = 1
+
+[node name="DEF" type="Label" parent="HBoxContainer/Labels"]
+margin_top = 24.0
+margin_right = 94.0
+margin_bottom = 45.0
+size_flags_vertical = 3
+text = "DEF: %s"
+valign = 1
+
+[node name="DMG" type="Label" parent="HBoxContainer/Labels"]
+margin_top = 49.0
+margin_right = 94.0
+margin_bottom = 70.0
+size_flags_vertical = 3
+text = "DMG: %s"
+valign = 1
+
+[node name="ROF" type="Label" parent="HBoxContainer/Labels"]
+margin_top = 74.0
+margin_right = 94.0
+margin_bottom = 95.0
+size_flags_vertical = 3
+text = "ROF: %s"
+valign = 1
+
+[node name="SPD" type="Label" parent="HBoxContainer/Labels"]
+margin_top = 99.0
+margin_right = 94.0
+margin_bottom = 120.0
+size_flags_vertical = 3
+text = "SPD: %s"
+valign = 1
+
+[node name="Buttons" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 98.0
+margin_right = 192.0
+margin_bottom = 120.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HP" type="Button" parent="HBoxContainer/Buttons"]
+margin_right = 94.0
+margin_bottom = 20.0
+size_flags_vertical = 3
+text = "Upgrade"
+
+[node name="DEF" type="Button" parent="HBoxContainer/Buttons"]
+margin_top = 24.0
+margin_right = 94.0
+margin_bottom = 45.0
+size_flags_vertical = 3
+text = "Upgrade"
+
+[node name="DMG" type="Button" parent="HBoxContainer/Buttons"]
+margin_top = 49.0
+margin_right = 94.0
+margin_bottom = 70.0
+size_flags_vertical = 3
+text = "Upgrade"
+
+[node name="ROF" type="Button" parent="HBoxContainer/Buttons"]
+margin_top = 74.0
+margin_right = 94.0
+margin_bottom = 95.0
+size_flags_vertical = 3
+text = "Upgrade"
+
+[node name="SPD" type="Button" parent="HBoxContainer/Buttons"]
+margin_top = 99.0
+margin_right = 94.0
+margin_bottom = 120.0
+size_flags_vertical = 3
+text = "Upgrade"

@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/Objects/Player UI.gd" type="Script" id=1]
+[ext_resource path="res://assets/Objects/UpgradeTab.tscn" type="PackedScene" id=2]
+
+[node name="PlayerUI" type="CanvasLayer"]
+layer = 128
+script = ExtResource( 1 )
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+margin_right = 192.0
+margin_bottom = 32.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+step = 1.0
+value = 50.0
+rounded = true
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExpBar" type="ProgressBar" parent="."]
+margin_top = 32.0
+margin_right = 192.0
+margin_bottom = 48.0
+step = 1.0
+value = 50.0
+rounded = true
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Level" type="Label" parent="."]
+margin_top = 48.0
+margin_right = 128.0
+margin_bottom = 64.0
+text = "Level: %s"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UpgradeTab" parent="." instance=ExtResource( 2 )]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_right = 1280.0
+[connection signal="mouse_entered" from="HealthBar" to="." method="_on_HealthBar_mouse_entered"]
+[connection signal="mouse_exited" from="HealthBar" to="." method="_on_HealthBar_mouse_exited"]
+[connection signal="mouse_entered" from="ExpBar" to="." method="_on_ExpBar_mouse_entered"]
+[connection signal="mouse_exited" from="ExpBar" to="." method="_on_ExpBar_mouse_exited"]
+[connection signal="pressed" from="UpgradeTab/HBoxContainer/Buttons/HP" to="." method="_on_HP_pressed"]
+[connection signal="pressed" from="UpgradeTab/HBoxContainer/Buttons/DEF" to="." method="_on_DEF_pressed"]
+[connection signal="pressed" from="UpgradeTab/HBoxContainer/Buttons/DMG" to="." method="_on_DMG_pressed"]
+[connection signal="pressed" from="UpgradeTab/HBoxContainer/Buttons/ROF" to="." method="_on_ROF_pressed"]
+[connection signal="pressed" from="UpgradeTab/HBoxContainer/Buttons/SPD" to="." method="_on_SPD_pressed"]
+
+[editable path="UpgradeTab"]
