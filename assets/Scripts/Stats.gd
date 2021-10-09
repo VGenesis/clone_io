@@ -21,8 +21,7 @@ var armor_upgrade := [5, 7, 10, 14, 20, 30]
 
 var dmg_level := 0
 var bullet_damage_upgrade := [6, 8, 12, 15, 20, 30]
-var bullet_speed_upgrade := [400, 450, 500, 575, 650, 750]
-var bullet_lifetime_upgrade := [1.5, 1.6, 1.7, 1.85, 2.0, 2.25]
+var bullet_speed_upgrade := [500, 550, 600, 675, 750, 900]
 
 var rof_level := 0
 var rof_base := 2.5
@@ -42,7 +41,7 @@ func _ready(): #detects player and sets ui's health and experience bars
 	set_ui_xp(xp, xp_req[level])
 	gui.update_level_label()
 	gui.update_stat_points_label()
-	gui.update_stat_labels()
+	gui.update_stat_bars()
 
 func set_xp(value): #adds experience and levels up if experience has passed the threshold
 	while level < max_level and value >= xp_req[level - 1]:
@@ -71,7 +70,6 @@ func stat_level_up(stat : String): #Levels up a stat
 	var stat_name = stat + "_level"
 	if stat_points > 0 and get(stat_name) < max_stat_level:
 		player.stat_level_up(stat)
-		gui.update_stat_level(stat)
 
 func set_ui_hp(value, max_value):
 	gui.healthbar.value = value

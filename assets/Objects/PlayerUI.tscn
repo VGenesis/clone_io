@@ -1,7 +1,59 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/Objects/Player UI.gd" type="Script" id=1]
 [ext_resource path="res://assets/Objects/UpgradeTab.tscn" type="PackedScene" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Appear"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:appeared")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("UpgradeTab:rect_position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( -270, -0.25, 100, 0.25, -100, 0, -0.1, 100, 0.1, -100 ),
+"times": PoolRealArray( 0, 0.5 )
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Disappear"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:appeared")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("UpgradeTab:rect_position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.1, 0, 0.1, 0, -270, -0.25, -100, 0.25, 100 ),
+"times": PoolRealArray( 0, 0.5 )
+}
 
 [node name="PlayerUI" type="CanvasLayer"]
 layer = 128
@@ -41,9 +93,142 @@ __meta__ = {
 }
 
 [node name="UpgradeTab" parent="." instance=ExtResource( 2 )]
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_right = 1280.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = -270.0
+margin_top = -192.0
+margin_right = 50.0
+
+[node name="HBoxContainer" parent="UpgradeTab" index="1"]
+margin_right = 264.0
+margin_bottom = 176.0
+
+[node name="Labels" parent="UpgradeTab/HBoxContainer" index="0"]
+margin_right = 32.0
+margin_bottom = 144.0
+size_flags_horizontal = 1
+alignment = 1
+
+[node name="HP" parent="UpgradeTab/HBoxContainer/Labels" index="0"]
+margin_right = 32.0
+margin_bottom = 25.0
+text = "HP"
+align = 1
+
+[node name="DEF" parent="UpgradeTab/HBoxContainer/Labels" index="1"]
+margin_top = 29.0
+margin_right = 32.0
+margin_bottom = 55.0
+text = "DEF"
+align = 1
+
+[node name="DMG" parent="UpgradeTab/HBoxContainer/Labels" index="2"]
+margin_top = 59.0
+margin_right = 32.0
+margin_bottom = 84.0
+text = "DMG"
+align = 1
+
+[node name="ROF" parent="UpgradeTab/HBoxContainer/Labels" index="3"]
+margin_top = 88.0
+margin_right = 32.0
+margin_bottom = 114.0
+text = "ROF"
+align = 1
+
+[node name="SPD" parent="UpgradeTab/HBoxContainer/Labels" index="4"]
+margin_top = 118.0
+margin_right = 32.0
+margin_bottom = 144.0
+text = "SPD"
+align = 1
+
+[node name="Bars" type="VBoxContainer" parent="UpgradeTab/HBoxContainer" index="1"]
+margin_left = 36.0
+margin_right = 187.0
+margin_bottom = 144.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="HP" type="ProgressBar" parent="UpgradeTab/HBoxContainer/Bars"]
+margin_right = 151.0
+margin_bottom = 25.0
+rect_pivot_offset = Vector2( -87, -24 )
+size_flags_vertical = 3
+max_value = 5.0
+percent_visible = false
+
+[node name="DEF" type="ProgressBar" parent="UpgradeTab/HBoxContainer/Bars"]
+margin_top = 29.0
+margin_right = 151.0
+margin_bottom = 55.0
+rect_pivot_offset = Vector2( -87, -24 )
+size_flags_vertical = 3
+max_value = 5.0
+percent_visible = false
+
+[node name="DMG" type="ProgressBar" parent="UpgradeTab/HBoxContainer/Bars"]
+margin_top = 59.0
+margin_right = 151.0
+margin_bottom = 84.0
+rect_pivot_offset = Vector2( -87, -24 )
+size_flags_vertical = 3
+max_value = 5.0
+percent_visible = false
+
+[node name="ROF" type="ProgressBar" parent="UpgradeTab/HBoxContainer/Bars"]
+margin_top = 88.0
+margin_right = 151.0
+margin_bottom = 114.0
+rect_pivot_offset = Vector2( -87, -24 )
+size_flags_vertical = 3
+max_value = 5.0
+percent_visible = false
+
+[node name="SPD" type="ProgressBar" parent="UpgradeTab/HBoxContainer/Bars"]
+margin_top = 118.0
+margin_right = 151.0
+margin_bottom = 144.0
+rect_pivot_offset = Vector2( -87, -24 )
+size_flags_vertical = 3
+max_value = 5.0
+percent_visible = false
+
+[node name="Buttons" parent="UpgradeTab/HBoxContainer" index="2"]
+margin_left = 191.0
+margin_right = 256.0
+margin_bottom = 144.0
+size_flags_horizontal = 1
+
+[node name="HP" parent="UpgradeTab/HBoxContainer/Buttons" index="0"]
+margin_right = 65.0
+margin_bottom = 25.0
+
+[node name="DEF" parent="UpgradeTab/HBoxContainer/Buttons" index="1"]
+margin_top = 29.0
+margin_right = 65.0
+margin_bottom = 55.0
+
+[node name="DMG" parent="UpgradeTab/HBoxContainer/Buttons" index="2"]
+margin_top = 59.0
+margin_right = 65.0
+margin_bottom = 84.0
+
+[node name="ROF" parent="UpgradeTab/HBoxContainer/Buttons" index="3"]
+margin_top = 88.0
+margin_right = 65.0
+margin_bottom = 114.0
+
+[node name="SPD" parent="UpgradeTab/HBoxContainer/Buttons" index="4"]
+margin_top = 118.0
+margin_right = 65.0
+margin_bottom = 144.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Appear = SubResource( 1 )
+anims/Disappear = SubResource( 2 )
 [connection signal="mouse_entered" from="HealthBar" to="." method="_on_HealthBar_mouse_entered"]
 [connection signal="mouse_exited" from="HealthBar" to="." method="_on_HealthBar_mouse_exited"]
 [connection signal="mouse_entered" from="ExpBar" to="." method="_on_ExpBar_mouse_entered"]

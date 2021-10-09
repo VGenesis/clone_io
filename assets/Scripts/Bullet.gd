@@ -1,6 +1,7 @@
 extends RigidBody2D
 
 onready var timer := $Timer
+onready var anim_player := $AnimationPlayer
 
 export var base_scale := 0.15
 
@@ -20,7 +21,7 @@ func _ready():
 	timer.start(lifetime)
 
 func _on_Timer_timeout():
-	queue_free()
+	anim_player.play("Destroy")
 
 func _on_Bullet_body_exited(body):
 	damage = linear_velocity.length() / start_velocity.length() * start_damage

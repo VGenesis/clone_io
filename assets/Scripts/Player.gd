@@ -16,7 +16,7 @@ var max_hp
 var armor
 var bullet_damage
 var bullet_speed
-var bullet_lifetime
+var bullet_lifetime = 1.0
 var rof
 var max_speed
 var acceleration
@@ -29,7 +29,6 @@ func _ready():
 	armor = Stats.armor_upgrade[Stats.def_level]
 	bullet_damage = Stats.bullet_damage_upgrade[Stats.dmg_level]
 	bullet_speed = Stats.bullet_speed_upgrade[Stats.dmg_level]
-	bullet_lifetime = Stats.bullet_lifetime_upgrade[Stats.dmg_level]
 	rof = Stats.rof_base * Stats.rof_upgrade[Stats.rof_level]
 	max_speed = Stats.spd_max_speed_upgrade[Stats.spd_level]
 	acceleration = Stats.spd_acceleration_upgrade[Stats.spd_level]
@@ -49,7 +48,7 @@ func _process(delta):
 	if shooting and can_shoot:
 		var bullet = bullet_scene.instance()
 		bullet.start_damage = bullet_damage
-		bullet.start_velocity = Vector2(cos(pivot.rotation), sin(pivot.rotation)) * bullet_speed + velocity
+		bullet.start_velocity = Vector2(cos(pivot.rotation), sin(pivot.rotation)) * bullet_speed + 0.2 * velocity
 		bullet.lifetime = bullet_lifetime
 		bullet.position = position + Vector2(cos(pivot.rotation), sin(pivot.rotation)) * 32
 		bullet.scale = Vector2(0.2, 0.2)
@@ -79,7 +78,6 @@ func stat_level_up(stat : String):
 				Stats.dmg_level += 1
 				bullet_damage = Stats.bullet_damage_upgrade[Stats.dmg_level]
 				bullet_speed = Stats.bullet_speed_upgrade[Stats.dmg_level]
-				bullet_lifetime = Stats.bullet_lifetime_upgrade[Stats.dmg_level]
 			"rof":
 				Stats.rof_level += 1
 				rof = Stats.rof_base * Stats.rof_upgrade[Stats.rof_level]
