@@ -28,18 +28,22 @@ _global_script_class_icons={
 
 config/name="clone.io"
 run/main_scene="res://assets/Objects/World.tscn"
+config/use_custom_user_dir=true
 config/icon="res://icon.png"
 
 [autoload]
 
 PlayerUI="*res://assets/Objects/PlayerUI.tscn"
 Stats="*res://assets/Objects/Stats.tscn"
+PlayerClass="*res://assets/Objects/PlayerClass.tscn"
 
 [display]
 
 window/size/width=1280
 window/size/height=720
 window/size/always_on_top=true
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
 
 [gdnative]
 

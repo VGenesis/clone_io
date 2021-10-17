@@ -6,7 +6,7 @@ class_name PassiveShape
 onready var hpbar := $HealthBar
 onready var animplayer := $AnimationPlayer
 
-export(int, 10, 200, 5) var max_hp = 25
+export(int, 10, 200, 5) var max_hp = 50
 export(float, 0, 1.0, 0.05) var start_size := 0.2
 export(int, 10, 200, 5) var xp = 10
 

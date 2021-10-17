@@ -14,6 +14,7 @@
 [node name="Camera2D" type="Camera2D" parent="Player"]
 scale = Vector2( 2, 2 )
 current = true
+smoothing_enabled = true
 
 [node name="ShapeGenerator" parent="." instance=ExtResource( 2 )]
 zero_timer = 0.01
@@ -22,7 +23,6 @@ zero_timer = 0.01
 wait_time = 0.01
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 10
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
 margin_right = 1280.0

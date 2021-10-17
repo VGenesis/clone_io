@@ -23,4 +23,7 @@ position = Vector2( 0.5, 0.5 )
 shape = SubResource( 1 )
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="ShieldTimer" type="Timer" parent="."]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="ShieldTimer" to="." method="_on_ShieldTimer_timeout"]
