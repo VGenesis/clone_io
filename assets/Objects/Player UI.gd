@@ -8,6 +8,7 @@ onready var level_label := $Level
 onready var stat_label := $UpgradeTab/StatsText
 onready var upgrade_bars := $UpgradeTab/HBoxContainer/Bars
 onready var upgrade_buttons := $UpgradeTab/HBoxContainer/Buttons
+onready var evolve_menu := $EvolutionMenu
 onready var anim_player := $AnimationPlayer
 
 var level_text := "Level: %s"
@@ -29,6 +30,9 @@ func update_stat_bars():
 	upgrade_bars.find_node("DMG").value = Stats.dmg_level
 	upgrade_bars.find_node("ROF").value = Stats.rof_level
 	upgrade_bars.find_node("SPD").value = Stats.spd_level
+
+func show_evolution_menu():
+	evolve_menu.display_evolutions()
 
 func _on_HealthBar_mouse_entered():
 	healthbar.percent_visible = true
@@ -61,3 +65,4 @@ func _on_ROF_pressed():
 func _on_SPD_pressed():
 	emit_signal("stat_level_up", "spd")
 	upgrade_bars.find_node("SPD").value = Stats.spd_level
+

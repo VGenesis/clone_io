@@ -1,0 +1,134 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/Scripts/ClassEdit.gd" type="Script" id=1]
+
+[node name="ClassEdit" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="LoadPopup" type="FileDialog" parent="."]
+margin_left = 96.0
+margin_top = 96.0
+margin_right = 528.0
+margin_bottom = 640.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+window_title = "Open a File"
+mode = 0
+
+[node name="SavePopup" type="FileDialog" parent="."]
+margin_left = 96.0
+margin_top = 96.0
+margin_right = 528.0
+margin_bottom = 640.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 256.0
+margin_top = 96.0
+margin_right = 1024.0
+margin_bottom = 640.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_right = 768.0
+margin_bottom = 544.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Button" parent="HBoxContainer/VBoxContainer"]
+margin_right = 768.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
+text = "File Editor"
+align = 0
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer"]
+margin_top = 28.0
+margin_right = 768.0
+margin_bottom = 515.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+margin_top = 519.0
+margin_right = 768.0
+margin_bottom = 544.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="SaveButton" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+margin_right = 189.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+text = "Save"
+
+[node name="SaveAsButton" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+margin_left = 193.0
+margin_right = 382.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+text = "Save As..."
+
+[node name="LoadButton" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+margin_left = 386.0
+margin_right = 575.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Load"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CloseButton" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+margin_left = 579.0
+margin_right = 768.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+text = "Close"
+
+[node name="SaveDialog" type="ConfirmationDialog" parent="."]
+margin_left = 544.0
+margin_top = 320.0
+margin_right = 744.0
+margin_bottom = 395.0
+dialog_text = "Are you sure you want to save?"
+dialog_autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SaveChangesDialog" type="AcceptDialog" parent="."]
+visible = true
+margin_left = 544.0
+margin_top = 320.0
+margin_right = 744.0
+margin_bottom = 395.0
+window_title = "Save file?"
+dialog_text = "The file contents have been changed. Do you want to save this file?"
+dialog_autowrap = true
+[connection signal="file_selected" from="LoadPopup" to="." method="_on_LoadPopup_file_selected"]
+[connection signal="file_selected" from="SavePopup" to="." method="_on_SavePopup_file_selected"]
+[connection signal="text_changed" from="HBoxContainer/VBoxContainer/TextEdit" to="." method="_on_TextEdit_text_changed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/SaveAsButton" to="." method="_on_SaveAsButton_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/LoadButton" to="." method="_on_LoadButton_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/CloseButton" to="." method="_on_CloseButton_pressed"]
+[connection signal="confirmed" from="SaveDialog" to="." method="_on_SaveDialog_confirmed"]
+[connection signal="confirmed" from="SaveChangesDialog" to="." method="_on_SaveDialog_confirmed"]
+[connection signal="custom_action" from="SaveChangesDialog" to="." method="_on_SaveChangesDialog_custom_action"]

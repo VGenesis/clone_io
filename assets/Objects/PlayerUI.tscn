@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/Objects/Player UI.gd" type="Script" id=1]
 [ext_resource path="res://assets/Objects/UpgradeTab.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/Objects/EvolutionMenu.tscn" type="PackedScene" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Appear"
@@ -225,6 +226,11 @@ margin_bottom = 114.0
 margin_top = 118.0
 margin_right = 65.0
 margin_bottom = 144.0
+
+[node name="EvolutionMenu" parent="." instance=ExtResource( 3 )]
+margin_left = -128.0
+margin_bottom = 128.0
+mouse_filter = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Appear = SubResource( 1 )

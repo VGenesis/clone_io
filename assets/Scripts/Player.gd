@@ -5,13 +5,13 @@ onready var shoot_timer := $Timer
 onready var bullet_scene := preload("res://assets/Objects/Bullet.tscn")
 onready var scene := get_tree().current_scene
 
+export(String, "Shooter", "Shotgunner", "Sniper") onready var classname = "Shooter"
+
 var direction : Vector2 = Vector2.ZERO
 var velocity : Vector2 = Vector2.ZERO
 var can_shoot : bool = true
 var shooting : bool = false
 var size : float = 0.25
-
-var class_type = "shotgunner"
 
 var class_stats = {}
 
@@ -30,32 +30,32 @@ var friction
 var shield setget set_shield
 
 func _ready():
-	var datafile = File.new()
-	var filepath = PlayerClass.get("filepath")
-	var data_copied = false
-	var path = PlayerClass.data_dir + "/" + PlayerClass.filenames.get(class_type)
-	if datafile.file_exists(path):
-		var error = datafile.open(path, File.READ)
-		if error == OK:
-			class_stats = datafile.get_var()
-			data_copied = true
-			datafile.close()
+	set_class_data(classname)
 	
-	if data_copied:
-		max_hp = class_stats.hp[Stats.hp_level]
-		self.hp = max_hp
-		armor = class_stats.armor[Stats.def_level]
-		self.shield = armor
-		bullet_damage = class_stats.bullet_dmg[Stats.dmg_level]
-		bullet_speed = class_stats.bullet_spd[Stats.dmg_level]
-		bullet_lifetime = class_stats.bullet_lifetime
-		bullets_per_shot = class_stats.bullets_per_shot
-		rof = class_stats.rof[Stats.rof_level]
-		max_speed = class_stats.max_speed[Stats.spd_level]
-		acceleration = class_stats.acceleration[Stats.spd_level]
-		friction = class_stats.friction[Stats.spd_level]
+	max_hp = class_stats.hp[Stats.hp_level]
+	armor = class_stats.armor[Stats.def_level]
+	bullet_damage = class_stats.bullet_dmg[Stats.dmg_level]
+	bullet_speed = class_stats.bullet_spd[Stats.dmg_level]
+	bullet_lifetime = class_stats.bullet_lifetime
+	bullets_per_shot = class_stats.bullets_per_shot
+	rof = class_stats.rof[Stats.rof_level]
+	max_speed = class_stats.max_speed[Stats.spd_level]
+	acceleration = class_stats.acceleration[Stats.spd_level]
+	friction = class_stats.friction[Stats.spd_level]
+	
+	self.hp = max_hp
+	self.shield = armor
 	
 	scale = Vector2(size, size)
+
+func set_class_data(new_classname : String):
+	var file = File.new()
+	var filepath = PlayerClass.get_class_filepath(new_classname)
+	
+	if file.file_exists(filepath):
+		if file.open(filepath, File.READ) == OK:
+			class_stats = file.get_var()
+			file.close()
 
 func set_health(value):
 	hp = clamp(value, 0, max_hp)
@@ -78,23 +78,23 @@ func set_shield(value):
 		$ShieldTimer.stop()
 		$ShieldTimer.start(3.0)
 
-func _process(delta):
+func _process(_delta):
 	pivot.rotation = get_angle_to(get_global_mouse_position())
 	if shooting and can_shoot:
 		if bullets_per_shot == [1, 1]:
 			create_bullet(Vector2(cos(pivot.rotation), sin(pivot.rotation)))
 		if bullets_per_shot[0] != bullets_per_shot[1]:
 			var bullets = int(rand_range(bullets_per_shot[0], bullets_per_shot[1]))
-			for i in range(bullets):
+			for _i in range(bullets):
 				var bdir = Vector2(cos(pivot.rotation), sin(pivot.rotation)) + Vector2(rand_range(-0.1, 0.1), rand_range(-0.1, 0.1))
 				create_bullet(bdir)
 
-func create_bullet(direction : Vector2):
+func create_bullet(bullet_direction : Vector2):
 	var bullet = bullet_scene.instance()
 	bullet.start_damage = bullet_damage
-	bullet.start_velocity = direction * bullet_speed + 0.2 * velocity
+	bullet.start_velocity = bullet_direction * bullet_speed + 0.2 * velocity
 	bullet.lifetime = bullet_lifetime
-	bullet.position = position + direction * 32
+	bullet.position = position + bullet_direction * 32
 	bullet.scale = Vector2(0.2, 0.2)
 	scene.add_child(bullet)
 	velocity -= bullet.start_velocity * 0.1 * bullet.base_scale
@@ -106,6 +106,11 @@ func _unhandled_input(event):
 		shooting = true
 	if event.is_action_released("key_shoot"):
 		shooting = false
+
+func level_up():
+	var hppc = hp/max_hp
+	max_hp += class_stats.hp_per_level
+	hp = lerp(0, max_hp, hppc)
 
 func stat_level_up(stat : String):
 	if Stats.stat_points > 0: 
@@ -131,6 +136,27 @@ func stat_level_up(stat : String):
 				acceleration = class_stats.acceleration[Stats.spd_level]
 				friction = class_stats.friction[Stats.spd_level]
 		Stats.stat_points -= 1
+
+func evolve(new_classname : String):
+	var old_class_stats = class_stats.duplicate()
+	set_class_data(new_classname)
+	
+	max_hp = class_stats.hp[Stats.hp_level]
+	armor = class_stats.armor[Stats.def_level]
+	bullet_damage = class_stats.bullet_dmg[Stats.dmg_level]
+	bullet_speed = class_stats.bullet_spd[Stats.dmg_level]
+	bullet_lifetime = class_stats.bullet_lifetime
+	bullets_per_shot = class_stats.bullets_per_shot
+	rof = class_stats.rof[Stats.rof_level]
+	max_speed = class_stats.max_speed[Stats.spd_level]
+	acceleration = class_stats.acceleration[Stats.spd_level]
+	friction = class_stats.friction[Stats.spd_level]
+	
+	if class_stats.hp_per_level != old_class_stats.hp_per_level:
+		max_hp += abs(class_stats.hp_per_level - old_class_stats.hp_per_level) * (Stats.level - 1)
+	
+	self.hp = max_hp
+	self.shield = armor	
 
 func _physics_process(delta):
 	direction = Vector2(
