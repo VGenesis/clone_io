@@ -5,27 +5,27 @@ This is a private project done with the purpose of coding practice and will not 
 
 Progress so far:
 
-- Player character - 80%
+- Player character: 90%
   - behaviour - 80%
     - requires shape collision behaviour
   - stats - DONE
+    - added an armor stat which partially blocks damage and can be broken when recieving high DPS
     - may require tweaking during further testing
 
-- Idle shapes - 70%
-  - behaviour - 80%
+- Idle shapes: 80%
+  - behaviour - 90%
     - requires player collision behaviour
   - animations - DONE
-    - added a hit animation
+    - added a creation and hit animation
   - variety - 50%
     - pentagon shape incomplete
     - giant pentagon incomplete
 
-- Hostile shapes - 0%
+- Hostile shapes: not implemented
 
-- Enviroment - DONE
+- Enviroment: DONE
   - added background fx for extra detail
 
-- Upgrade system - 40%
-  - requires animations for upgrade menu
-  - requires evolution system
+- Upgrade system: 60%
+  - requires class evolution system
 
