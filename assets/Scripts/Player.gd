@@ -56,6 +56,7 @@ func set_class_data(new_classname : String):
 		if file.open(filepath, File.READ) == OK:
 			class_stats = file.get_var()
 			file.close()
+	print(class_stats)
 
 func set_health(value):
 	hp = clamp(value, 0, max_hp)
@@ -81,7 +82,7 @@ func set_shield(value):
 func _process(_delta):
 	pivot.rotation = get_angle_to(get_global_mouse_position())
 	if shooting and can_shoot:
-		if bullets_per_shot == [1, 1]:
+		if bullets_per_shot == PoolIntArray([1, 1]):
 			create_bullet(Vector2(cos(pivot.rotation), sin(pivot.rotation)))
 		if bullets_per_shot[0] != bullets_per_shot[1]:
 			var bullets = int(rand_range(bullets_per_shot[0], bullets_per_shot[1]))

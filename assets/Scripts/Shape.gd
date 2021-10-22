@@ -1,7 +1,6 @@
 extends RigidBody2D
 
 signal destroyed
-class_name PassiveShape
 
 onready var hpbar := $HealthBar
 onready var animplayer := $AnimationPlayer

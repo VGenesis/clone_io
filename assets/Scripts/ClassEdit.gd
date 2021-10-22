@@ -10,8 +10,26 @@ const dir_path := "res://assets/Data/"
 const editor_text := "  File: %s\n\n%s"
 
 var file_loaded = "" setget set_file_loaded
-
 var text_changed = false
+
+var dict_format = {
+	"name" : "String",
+	"hp_per_level" : "Int",
+	"hp" : "IntArray",
+	"armor" : "IntArray",
+	"bullet_dmg" : "IntArray",
+	"bullet_spd" : "FloatArray",
+	"bullet_lifetime" : "Float",
+	"bullet_size" : "Vector2",
+	"bullets_per_shot" : "IntArray",
+	"rof" : "FloatArray",
+	"max_speed" : "FloatArray",
+	"acceleration" : "FloatArray",
+	"friction" : "FloatArray",
+	"stat_restriction" : "StringArray",
+	"parent_class" : "StringArray",
+	"child_classes" : "StringArray"
+}
 
 func _ready():
 	load_menu.current_dir = dir_path
@@ -27,6 +45,13 @@ func set_file_loaded(value):
 	else:
 		editor.text = ""
 
+func split_data_line(arr : String):
+	arr = arr.replace("[", "")
+	arr = arr.replace("]", "")
+	var res = PoolStringArray(arr.split(", "))
+	print(res)
+	return res
+
 func convert_editor_to_dict():
 	var data = {}
 	for i in range(2, editor.get_line_count() - 1):
@@ -34,7 +59,33 @@ func convert_editor_to_dict():
 		line = line.strip_edges()
 		line = line.replace(" = ", "%")
 		var words : Array = line.split("%")
-		data[words[0]] = words[1]
+		var name = words[0]
+		var type = dict_format[name]
+		var res
+		print(words[0] + " : " + type)
+		match(type):
+			"Int":   	res = words[1].to_int()
+			"Float": 	res = words[1].to_float()
+			"String":	res = words[1]
+			"IntArray":
+				words[1] = split_data_line(words[1])
+				res = PoolIntArray()
+				for word in words[1]:
+					res.append(word.to_int())
+			"FloatArray":
+				words[1] = split_data_line(words[1])
+				res = PoolRealArray()
+				for word in words[1]:
+					res.append(word.to_int())
+			"StringArray":
+				words[1] = split_data_line(words[1])
+				res = PoolStringArray()
+				for word in words[1]:
+					res.append(word)
+			"Vector2":
+				words[1] = split_data_line(words[1])
+				res = Vector2(words[1][0], words[1][1])
+		data[name] = res
 	return data
 
 func load_file(path):
@@ -46,6 +97,7 @@ func load_file(path):
 			data += "    " + str(key) + " = " + str(raw_data[key]) + "\n"
 		editor.text = editor_text % [file_loaded, data]
 		file.close()
+	convert_editor_to_dict()
 
 func save_file(path):
 	var file = File.new()
@@ -86,3 +138,6 @@ func _on_SaveChangesDialog_custom_action(action):
 		"ExitNoSave":
 			self.file_loaded = ""
 			save_changes_dialog.hide()
+
+func _on_ExitButton_pressed():
+	get_tree().quit()

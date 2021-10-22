@@ -52,7 +52,6 @@ class Class:
 		print(name)
 		if has_children(): for child in children:
 			print(child.get_filename())
-		
 
 var shooter := Class.new("Shooter", "ShooterData.dat")
 var shotgunner := Class.new("Shotgunner", "ShotgunnerData.dat")

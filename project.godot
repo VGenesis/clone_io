@@ -17,7 +17,7 @@ _global_script_classes=[ {
 "base": "RigidBody2D",
 "class": "PassiveShape",
 "language": "GDScript",
-"path": "res://assets/Scripts/Shape.gd"
+"path": "res://assets/scripts/Shape.gd"
 } ]
 _global_script_class_icons={
 "GitAPI": "",
