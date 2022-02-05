@@ -1,7 +1,8 @@
 # clone.io
 A diep.io clone made by VGenesis
 
-This is a private project done with the purpose of coding practice and will not be published anywhere besides GitHub.
+This is a private project done with the purpose of coding practice.
+This project will not be published anywhere besides GitHub.
 
 Progress so far:
 
