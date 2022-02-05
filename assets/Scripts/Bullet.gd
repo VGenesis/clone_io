@@ -23,6 +23,6 @@ func _ready():
 func _on_Timer_timeout():
 	anim_player.play("Destroy")
 
-func _on_Bullet_body_exited(body):
+func _on_Bullet_body_exited(_body):
 	damage = linear_velocity.length() / start_velocity.length() * start_damage
 	print(damage)

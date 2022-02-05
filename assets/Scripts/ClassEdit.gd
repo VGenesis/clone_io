@@ -64,9 +64,12 @@ func convert_editor_to_dict():
 		var res
 		print(words[0] + " : " + type)
 		match(type):
-			"Int":   	res = words[1].to_int()
-			"Float": 	res = words[1].to_float()
-			"String":	res = words[1]
+			"Int":   
+				res = words[1].to_int()
+			"Float": 
+				res = words[1].to_float()
+			"String":
+				res = words[1]
 			"IntArray":
 				words[1] = split_data_line(words[1])
 				res = PoolIntArray()
@@ -76,7 +79,7 @@ func convert_editor_to_dict():
 				words[1] = split_data_line(words[1])
 				res = PoolRealArray()
 				for word in words[1]:
-					res.append(word.to_int())
+					res.append(word.to_float())
 			"StringArray":
 				words[1] = split_data_line(words[1])
 				res = PoolStringArray()
@@ -85,6 +88,8 @@ func convert_editor_to_dict():
 			"Vector2":
 				words[1] = split_data_line(words[1])
 				res = Vector2(words[1][0], words[1][1])
+			"String":
+				res = words
 		data[name] = res
 	return data
 

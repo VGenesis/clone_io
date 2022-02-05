@@ -11,7 +11,7 @@ bounce = 0.5
 radius = 48.0
 
 [sub_resource type="CircleShape2D" id=3]
-radius = 50.0
+radius = 48.0
 
 [sub_resource type="Animation" id=4]
 resource_name = "Destroy"

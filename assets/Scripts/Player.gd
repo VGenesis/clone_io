@@ -30,33 +30,8 @@ var friction
 var shield setget set_shield
 
 func _ready():
-	set_class_data(classname)
-	
-	max_hp = class_stats.hp[Stats.hp_level]
-	armor = class_stats.armor[Stats.def_level]
-	bullet_damage = class_stats.bullet_dmg[Stats.dmg_level]
-	bullet_speed = class_stats.bullet_spd[Stats.dmg_level]
-	bullet_lifetime = class_stats.bullet_lifetime
-	bullets_per_shot = class_stats.bullets_per_shot
-	rof = class_stats.rof[Stats.rof_level]
-	max_speed = class_stats.max_speed[Stats.spd_level]
-	acceleration = class_stats.acceleration[Stats.spd_level]
-	friction = class_stats.friction[Stats.spd_level]
-	
-	self.hp = max_hp
-	self.shield = armor
-	
+	Stats.set_evolution_data()
 	scale = Vector2(size, size)
-
-func set_class_data(new_classname : String):
-	var file = File.new()
-	var filepath = PlayerClass.get_class_filepath(new_classname)
-	
-	if file.file_exists(filepath):
-		if file.open(filepath, File.READ) == OK:
-			class_stats = file.get_var()
-			file.close()
-	print(class_stats)
 
 func set_health(value):
 	hp = clamp(value, 0, max_hp)
@@ -100,7 +75,7 @@ func create_bullet(bullet_direction : Vector2):
 	scene.add_child(bullet)
 	velocity -= bullet.start_velocity * 0.1 * bullet.base_scale
 	can_shoot = false
-	shoot_timer.start(1/rof)
+	shoot_timer.start(1 / rof)
 
 func _unhandled_input(event):
 	if event.is_action_pressed("key_shoot"):
@@ -138,9 +113,9 @@ func stat_level_up(stat : String):
 				friction = class_stats.friction[Stats.spd_level]
 		Stats.stat_points -= 1
 
-func evolve(new_classname : String):
-	var old_class_stats = class_stats.duplicate()
-	set_class_data(new_classname)
+func evolve():
+	class_stats = Stats.evolution_stats
+	print(class_stats)
 	
 	max_hp = class_stats.hp[Stats.hp_level]
 	armor = class_stats.armor[Stats.def_level]
@@ -153,11 +128,11 @@ func evolve(new_classname : String):
 	acceleration = class_stats.acceleration[Stats.spd_level]
 	friction = class_stats.friction[Stats.spd_level]
 	
-	if class_stats.hp_per_level != old_class_stats.hp_per_level:
-		max_hp += abs(class_stats.hp_per_level - old_class_stats.hp_per_level) * (Stats.level - 1)
+	max_hp += class_stats.hp_per_level * (Stats.level - 1)
 	
+	classname = class_stats.name
 	self.hp = max_hp
-	self.shield = armor	
+	self.shield = armor
 
 func _physics_process(delta):
 	direction = Vector2(

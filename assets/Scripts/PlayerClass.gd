@@ -8,21 +8,26 @@ class Class:
 	var children : Array
 	var stat_filename : String
 	
-	func _init(name : String, stat_filename : String):
-		self.name = name
+	func _init(_name : String, _stat_filename : String):
+		self.name = _name
 		parent = null
 		children = []
-		self.stat_filename = stat_filename
+		self.stat_filename = _stat_filename
 	
 	func get_name(): return name
 	
 	func get_parent(): return parent
 	
-	func set_parent(parent : Class): self.parent = parent
+	func set_parent(_parent : Class): self.parent = _parent
 	
 	func has_children(): return (children.size() > 0)
 	
 	func get_child(index : int): return children[index]
+	
+	func find_child(_name : String):
+		if has_children(): for child in children:
+			if child.get_name() == _name: return child.get_name()
+		return name
 	
 	func get_children(): return children
 	
@@ -31,13 +36,6 @@ class Class:
 		object.set_parent(self)
 	
 	func get_filename(): return stat_filename
-	
-	func find_filename(classname : String):
-		var filename = ""
-		var obj = find_class(classname)
-		if obj != null:
-			filename = obj.get_filename()
-		return filename
 	
 	func find_class(classname : String):
 		if name == classname:
@@ -51,24 +49,23 @@ class Class:
 	func print():
 		print(name)
 		if has_children(): for child in children:
-			print(child.get_filename())
+			child.print();
 
-var shooter := Class.new("Shooter", "ShooterData.dat")
-var shotgunner := Class.new("Shotgunner", "ShotgunnerData.dat")
-var sniper := Class.new("Sniper", "SniperData.dat")
-
-var class_hierarchy := shooter
+var class_hierarchy = null
 
 func _ready():
-	class_hierarchy.add_child(shotgunner)
-	class_hierarchy.add_child(sniper)
+	class_hierarchy = Class.new("Shooter", "ShooterData.dat")
+	class_hierarchy.add_child(Class.new("Shotgunner", "ShotgunnerData.dat"))
+	class_hierarchy.add_child(Class.new("Sniper", "SniperData.dat"))
 
-func store_data(data, filepath):
+func get_class_data(c : Class):
 	var file = File.new()
-	if file.open(filepath, File.WRITE) == OK:
-		file.store_var(data)
-		file.close()
-
-func get_class_filepath(classname : String):
-	var filepath = data_dir + "/" + class_hierarchy.find_filename(classname)
-	return filepath
+	var filepath = data_dir + "/" + c.get_filename()
+	var data : Dictionary
+	
+	if file.file_exists(filepath):
+		if file.open(filepath, File.READ) == OK:
+			data = file.get_var()
+			file.close()
+	
+	return data

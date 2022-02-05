@@ -28,8 +28,8 @@ config/icon="res://icon.png"
 [autoload]
 
 PlayerUI="*res://assets/Objects/PlayerUI.tscn"
-Stats="*res://assets/Objects/Stats.tscn"
 PlayerClass="*res://assets/Objects/PlayerClass.tscn"
+Stats="*res://assets/Objects/Stats.tscn"
 
 [display]
 
